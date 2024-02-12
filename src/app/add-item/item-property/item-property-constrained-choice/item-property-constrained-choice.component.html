@@ -1,0 +1,37 @@
+<ng-container [formGroup]="metadata">
+  @if (property.metadata.viewMode === viewModes.color) {
+  <div class="flex w-4 gap-4">
+    <mat-form-field class="hidden" appearance="outline">
+      <mat-label>{{ property.name }}</mat-label>
+      <input
+        class="hidden"
+        matInput
+        [ngxMatColorPicker]="picker"
+      />
+      <ngx-mat-color-toggle class="hidden" matSuffix [for]="picker"></ngx-mat-color-toggle>
+      <ngx-mat-color-picker class="hidden" #picker [touchUi]="true"></ngx-mat-color-picker>
+    </mat-form-field>
+    <div class="pt-2">
+      <mat-icon clas>colorize</mat-icon>
+    </div>
+    <div class="flex flex-row flex-wrap gap-2">
+      @for (choice of property.metadata.choices; track choice) {
+      <button
+        mat-mini-fab
+        [style.background]="choice"
+        (click)="pickColor(choice)"
+      ></button>
+      }
+    </div>
+  </div>
+  } @else {
+  <mat-form-field appearance="outline" class="w-4">
+    <mat-label>{{ property.name }}</mat-label>
+    <mat-select formControlName="value">
+      @for (choice of property.metadata.choices ; track choice) {
+      <mat-option [value]="choice">{{ choice }}</mat-option>
+      }
+    </mat-select>
+  </mat-form-field>
+  }
+</ng-container>

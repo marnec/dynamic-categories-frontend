@@ -1,0 +1,45 @@
+<div class="p-5">
+  @if (category) {
+  <form [formGroup]="category" class="flex flex-column">
+    <div class="flex align-items-center gap-3">
+      <mat-form-field class="w-6" appearance="outline">
+        <mat-label>Category name</mat-label>
+        <input matInput formControlName="name" />
+      </mat-form-field>
+
+      <button mat-stroked-button color="primary" (click)="addProperty()">
+        <div class="flex align-items-center gap-3">
+          <div>Add Property</div>
+          <mat-icon>add</mat-icon>
+        </div>
+      </button>
+
+      <button
+        mat-stroked-button
+        color="primary"
+        (click)="saveCategory()"
+        [disabled]="category.invalid"
+      >
+        <div class="flex align-items-center gap-3">
+          <div>Save Category</div>
+          <mat-icon>save</mat-icon>
+        </div>
+      </button>
+    </div>
+
+    <div formArrayName="properties">
+      <h4>Properties</h4>
+      @for (property of properties.controls; track property.value; let i =
+      $index) {
+
+      <app-property
+        [isLastProperty]="properties.length === 1"
+        [property]="property"
+        (remove)="removePropertyAt(i)"
+      ></app-property>
+
+      }
+    </div>
+  </form>
+  }
+</div>

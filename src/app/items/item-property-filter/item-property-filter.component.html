@@ -1,0 +1,57 @@
+<div [formGroup]="propertyFilterForm" class="w-full">
+  <mat-expansion-panel [expanded]="true">
+    <mat-expansion-panel-header>
+      <mat-panel-title> {{ property.name }} </mat-panel-title>
+    </mat-expansion-panel-header>
+
+    @switch (property.type) { @case (propertyTypes.string) {
+
+    <mat-form-field appearance="outline" class="w-full">
+      <mat-label>{{ property.name }}</mat-label>
+      <input type="text" matInput formControlName="value" />
+      <button
+        matSuffix
+        mat-icon-button
+        aria-label="Clear"
+        (click)="unsetValue()"
+      >
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-form-field>
+
+    } @case(propertyTypes.boolean) {
+
+    <div class="flex justify-content-between">
+      <div class="flex align-items-center">
+        <mat-checkbox
+          formControlName="value"
+          [indeterminate]="propertyFilterForm.value.value === null"
+        ></mat-checkbox>
+        <mat-label>{{ property.name }}</mat-label>
+      </div>
+      <button mat-icon-button (click)="unsetValue()">
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
+
+    } @case (propertyTypes.number) {
+    <app-property-filter-number
+      [property]="property"
+      [propertyFilter]="propertyFilterForm"
+      (unsetValue)="unsetValue()"
+    ></app-property-filter-number>
+    } @case(propertyTypes.constainedChoice) {
+    <app-property-filter-constrained-choice
+      [property]="property"
+      [propertyFilter]="propertyFilterForm"
+      (unsetValue)="unsetValue()"
+    ></app-property-filter-constrained-choice>
+    } @case (propertyTypes.freeChoice) {
+    <app-property-filter-free-choice
+      [property]="property"
+      [propertyFilter]="propertyFilterForm"
+      (unsetValue)="unsetValue()"
+    ></app-property-filter-free-choice>
+    }}
+  </mat-expansion-panel>
+</div>

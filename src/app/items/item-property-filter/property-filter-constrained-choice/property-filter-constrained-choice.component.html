@@ -1,0 +1,31 @@
+<ng-container [formGroup]="propertyFilter">
+  @if(property.metadata.viewMode === viewModes.color) {
+  <div class="flex flex-row justify-content-between align-items-center">
+    <div>{{ property.name }}</div>
+    <button mat-icon-button (click)="unsetValue.emit()">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+  <div class="flex flex-wrap flex-row gap-2">
+    @for (option of property.metadata.choices; track option) {
+    <button
+      mat-mini-fab
+      [style.background]="option"
+      (click)="toggleOption(option)"
+    >
+      @if(value.includes(option)) {
+      <mat-icon [style.color]="option | foregroundFromHex"> check </mat-icon>
+      }
+    </button>
+    }
+  </div>
+  } @else {
+  <mat-form-field appearance="outline" class="w-full">
+    <mat-label> {{ property.name }} </mat-label>
+    <mat-select formControlName="value" [multiple]="true">
+      @for (option of property.metadata.choices; track option) {
+      <mat-option [value]="option"> {{ option }} </mat-option>
+      }
+    </mat-select> </mat-form-field
+  >}
+</ng-container>

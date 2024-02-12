@@ -1,0 +1,7 @@
+{
+    "string": "text",
+    "number": "number",
+    "boolean": "true or false",
+    "constrainedChoice": "constrained choice",
+    "freeChoice": "free choice"
+}

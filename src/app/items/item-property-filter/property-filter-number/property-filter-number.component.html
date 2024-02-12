@@ -1,0 +1,27 @@
+<ng-container [formGroup]="propertyFilter">
+  @if ( (property.metadata.max | isDefined) && (property.metadata.min |
+  isDefined)) {
+
+  <div class="pr-3">
+    <div class="flex justify-content-between">
+      <label>{{ property.name }}</label>
+      <label>{{ sliderFrom.value }} - {{ sliderTo.value }}</label>
+    </div>
+    <mat-slider
+      [min]="property.metadata.min"
+      [max]="property.metadata.max"
+      step="1"
+      class="w-full"
+    >
+      <input matSliderStartThumb formControlName="min" #sliderFrom />
+      <input matSliderEndThumb formControlName="max" #sliderTo />
+    </mat-slider>
+  </div>
+
+  } @else {
+  <mat-form-field appearance="outline" class="w-full">
+    <mat-label>{{ property.name }}</mat-label>
+    <input matInput type="number" formControlName="value" />
+  </mat-form-field>
+  }
+</ng-container>

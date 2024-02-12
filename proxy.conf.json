@@ -1,0 +1,10 @@
+{
+    "/backend": {
+        "target": "http://backend:3000/",
+        "pathRewrite": {
+            "^/backend": ""
+        },
+        "secure": false,
+        "changeOrigin": true
+    }
+}

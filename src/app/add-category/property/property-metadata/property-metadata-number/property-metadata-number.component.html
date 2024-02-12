@@ -1,0 +1,12 @@
+@if (metadata) {
+<div [formGroup]="metadata" class="flex flex-row gap-3">
+  <mat-form-field appearance="outline">
+    <mat-label>Min</mat-label>
+    <input type="number" matInput formControlName="min" />
+  </mat-form-field>
+  <mat-form-field appearance="outline">
+    <mat-label>Max</mat-label>
+    <input type="number" matInput formControlName="max" />
+  </mat-form-field>
+</div>
+}

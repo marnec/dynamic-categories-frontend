@@ -1,0 +1,60 @@
+<div class="p-5 flex flex-column gap-3">
+  <div class="flex gap-3 justify-content-end">
+    <button mat-raised-button color="primary" [routerLink]="['/add-category']">
+      Add category
+    </button>
+
+    <button mat-raised-button color="primary" [routerLink]="['/add-item']">
+      Add item
+    </button>
+  </div>
+
+  <ng-container [formGroup]="itemFilter">
+    <mat-form-field class="w-full" appearance="outline">
+      <mat-label>Category</mat-label>
+      <mat-select formControlName="category">
+        @for (category of categories; track $index) {
+        <mat-option [value]="category">{{ category.name }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+
+    <div class="grid" formArrayName="properties">
+      <div class="col-4 flex flex-column">
+        <div class="flex flex-row justify-content-between align-items-center">
+          <h4>Filters</h4>
+          <button mat-icon-button (click)="resetFilters()"><mat-icon>close</mat-icon></button>
+        </div>
+        <div class="flex flex-column">
+          <mat-accordion [multi]="true">
+            @if (itemFilter.controls.properties.length) { @for (property of
+            itemFilter.controls.category.value?.properties; track $index) {
+            <app-item-property-filter
+              [property]="property"
+              [propertyFilterForm]="itemFilter.controls.properties.at($index)"
+            ></app-item-property-filter>
+
+            } }
+          </mat-accordion>
+        </div>
+      </div>
+      <div class="col-8">
+        <div class="flex flex-row align-items-center gap-3">
+          <div>
+            <h4>Items</h4>
+          </div>
+          <mat-progress-bar
+            mode="indeterminate"
+            [class.hidden]="!loading"
+          ></mat-progress-bar>
+        </div>
+
+        <div class="grid">
+          @for (item of items$ | async; track item.id) {
+          <app-item-card class="col-4" [item]="item"></app-item-card>
+          }
+        </div>
+      </div>
+    </div>
+  </ng-container>
+</div>

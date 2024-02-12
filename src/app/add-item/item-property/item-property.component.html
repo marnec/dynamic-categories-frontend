@@ -1,0 +1,37 @@
+<ng-container [formGroup]="itemProperty">
+  <div class="flex flex-row gap-4 align-items-start" formGroupName="metadata">
+    @switch (itemProperty.value.type) { @case (propertyTypes.string) {
+    <app-item-property-string
+      class="w-full"
+      [metadata]="itemProperty.controls.metadata"
+      [property]="property"
+    ></app-item-property-string>
+    } @case (propertyTypes.number) {
+    <app-item-property-number
+      class="w-full"
+      [metadata]="itemProperty.controls.metadata"
+      [property]="property"
+    ></app-item-property-number>
+    } @case (propertyTypes.boolean) {
+    <app-item-property-boolean
+      class="w-full"
+      [metadata]="itemProperty.controls.metadata"
+      [property]="property"
+    ></app-item-property-boolean>
+    } @case (propertyTypes.constainedChoice) {
+    <app-item-property-constrained-choice
+      class="w-full"
+      [metadata]="itemProperty.controls.metadata"
+      [property]="property"
+      (unsetValue)="unsetValue()"
+    ></app-item-property-constrained-choice>
+    } @case (propertyTypes.freeChoice) {
+    <app-item-property-free-choice
+      class="w-full"
+      [metadata]="itemProperty.controls.metadata"
+      [property]="property"
+      (unsetValue)="unsetValue()"
+    ></app-item-property-free-choice>
+    } }
+  </div>
+</ng-container>

@@ -1,0 +1,19 @@
+@if ( metadata ) {
+<div
+  [formGroup]="metadata"
+  class="flex flex-row flex-1 gap-3 align-items-start"
+>
+  <mat-form-field appearance="outline" class="w-4">
+    <mat-label>View Mode</mat-label>
+    <mat-select formControlName="viewMode">
+      @for (viewMode of viewModes; track viewMode) {
+      <mat-option [value]="viewMode">
+        {{ viewMode }}
+      </mat-option>
+      }
+      
+    </mat-select>
+  </mat-form-field>
+</div>
+
+}

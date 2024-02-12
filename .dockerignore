@@ -1,0 +1,11 @@
+.vscode/
+.git/
+node_modules/
+dist/
+Makefile
+.gitignore
+.gitlab-ci.yml
+.editorconfig
+documentation/
+README.md
+.github/

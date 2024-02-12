@@ -1,0 +1,26 @@
+# INSTALLAZIONE NODE
+FROM node:18.18.2-alpine AS builder
+WORKDIR /app
+# INSTALLAZIONE DIPENDENZE
+COPY package.json ./
+RUN npm install
+COPY . .
+# BUILD DI PRODUZIONE. N.B IL BASE-HREF E' QUELLO DI DEFAULT, VERRA'
+# SUCCESSIVAMENTE SOSTITUITO PRENDENDO IL VALORE DAL .ENV
+RUN npx ng build --configuration production --output-path=/app/dist
+
+# INSTALLAZIONE NGINX
+FROM nginx:1.21.6-alpine
+# COPIA DEL FILE DI CONFIGURAZIONE DI NGINX (TRASFERISCO QUELLA DEL PROGETTO ALL'INTERNO DEL CONTAINER)
+COPY --from=builder /app/nginx.conf /etc/nginx/conf.d/default.conf
+
+# COPIA DEL FILE DI ENTRYPOINT DEL DOCKER (TRASFERISCO QUELLO DEL PROGETTO ALL'INTERNO DEL CONTAINER)
+COPY ./docker/docker-entrypoint.production.sh /docker-entrypoint.sh
+
+# PULIZIA DEI FILE VECCHI E COPIA DI QUELLI CREATI CON LA BUILD ESEGUITA IN PRECEDENZA
+RUN rm -rf /usr/share/nginx/html/* && chmod +x /docker-entrypoint.sh
+COPY --from=builder /app/dist /usr/share/nginx/html
+
+# IMPOSTAZIONE ENTRYPOINT CON IL FILE COPIATO IN PRECEDENZA,
+# VIENE ESEGUITO AD OGNI AVVIO DEL DOCKER
+ENTRYPOINT /docker-entrypoint.sh

@@ -1,0 +1,42 @@
+@if ( metadata ) {
+<div [formGroup]="metadata" class="flex flex-row flex-1 gap-3 align-items-start">
+  <mat-form-field appearance="outline" class="w-8">
+    <mat-label>Choice options</mat-label>
+    <mat-chip-grid #chipGrid aria-label="Enter options">
+      @for (choiceOption of choices?.value || []; track choiceOption; let j =
+      $index) {
+      <mat-chip-row
+        (removed)="removeChoice(j)"
+        [editable]="true"
+        (edited)="editChoice($event, j)"
+        aria-description="press enter to edit {{ choiceOption }}"
+      >
+        {{ choiceOption }}
+
+        <button matChipRemove attr.aria-label="remove {{ choiceOption }}">
+          <mat-icon>cancel</mat-icon>
+        </button>
+      </mat-chip-row>
+      }
+      <input
+        placeholder="Add options..."
+        [matChipInputFor]="chipGrid"
+        [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+        [matChipInputAddOnBlur]="true"
+        (matChipInputTokenEnd)="addChoice($event)"
+      />
+    </mat-chip-grid>
+  </mat-form-field>
+  <mat-form-field appearance="outline" class="w-4">
+    <mat-label>View Mode</mat-label>
+    <mat-select formControlName="viewMode">
+      @for (viewMode of viewModes; track viewMode) {
+      <mat-option [value]="viewMode">
+        {{ viewMode }}
+      </mat-option>
+      }
+    </mat-select>
+  </mat-form-field>
+</div>
+
+}

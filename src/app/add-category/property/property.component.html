@@ -1,0 +1,36 @@
+<div class="flex flex-row gap-3 align-items-start" [formGroup]="property">
+  <button
+    mat-mini-fab
+    class="mt-2"
+    color="primary"
+    [disabled]="isLastProperty"
+    (click)="removePropertyAt()"
+  >
+    <mat-icon>remove</mat-icon>
+  </button>
+
+  <mat-form-field class="w-3" appearance="outline">
+    <mat-label>Property name</mat-label>
+    <input matInput formControlName="name" />
+  </mat-form-field>
+
+  <mat-form-field class="w-3" appearance="outline">
+    <mat-label>Property type</mat-label>
+    <mat-select matInput formControlName="type">
+      @for (propertyType of propertyTypes | keyvalue; track $index) {
+
+      <mat-option [value]="propertyType.value">
+        {{ propertyType.value | translate }}
+      </mat-option>
+
+      }
+    </mat-select>
+  </mat-form-field>
+
+  <div class="flex-1">
+    <app-property-metadata
+      [propertyType]="property.value.type"
+      [metadata]="metadata"
+    ></app-property-metadata>
+  </div>
+</div>

@@ -1,0 +1,14 @@
+@if (metadata) {
+<ng-container [formGroup]="metadata">
+  @if(propertyType === propertyTypes.number) {
+  <app-property-metadata-number [metadata]="metadata">
+  </app-property-metadata-number>
+  } @else if(propertyType === propertyTypes.constainedChoice) {
+  <app-property-metadata-constrained-choice [metadata]="metadata">
+  </app-property-metadata-constrained-choice>
+  } @else if (propertyType === propertyTypes.freeChoice) {
+  <app-property-metadata-free-choice [metadata]="metadata">
+  </app-property-metadata-free-choice>
+  }
+</ng-container>
+}
